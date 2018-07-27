@@ -1,10 +1,3 @@
-/*
-Edition: 1.0.
-Editor: Yang Heng, Ma Ke.
-OpenCV Edition: 2.3.1.
-Ide Edition: Visual Studio 2010.
-Time: 2016.4.11.
-*/
 #include "define.h"
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -71,7 +64,7 @@ extern void OptimizeForeground(unsigned char * s_img, int img_width, int img_hei
 	i_img = (unsigned short*)malloc(sizeof(unsigned short)*img_width*img_height);
 	memset(i_img, 0, sizeof(unsigned short)*img_width*img_height);
 	
-	// ¼ÆËã»ı·ÖÍ¼
+	// è®¡ç®—ç§¯åˆ†å›¾
 	for(i = 0; i < img_height; i++)
 	{
 		for(j = 0; j < img_width; j++)
@@ -89,7 +82,7 @@ extern void OptimizeForeground(unsigned char * s_img, int img_width, int img_hei
 		}
 	}
 
-	// ÖØĞÂÌáÈ¡Ç°¾°µã
+	// é‡æ–°æå–å‰æ™¯ç‚¹
 	for(i = N; i < img_height-N; i++)
 	{
 		for(j = N; j < img_width-N; j++)
@@ -127,7 +120,7 @@ extern void SeedFill(Mat image, bool* flags, int pos, RECTDEF* rect)
 	list[point_num] = temp_point;
 	point_num = (point_num+1) % max_pts;
 
-	// ³õÊ¼»¯Íâ½Ó¾ØĞÎ²ÎÊı
+	// åˆå§‹åŒ–å¤–æ¥çŸ©å½¢å‚æ•°
 	rect->x = x;
 	rect->y = y;
 	rect->width = 1;
@@ -175,7 +168,7 @@ extern void SeedFill(Mat image, bool* flags, int pos, RECTDEF* rect)
 				}
 			}// end for
 		} //end for
-	}// end while ÔÙÕÒ²»µ½Á¬Í¨ÇøÓò
+	}// end while å†æ‰¾ä¸åˆ°è¿é€šåŒºåŸŸ
 }
 
 extern void ObjSegmentation(Mat image, OBJECTSTATE* p_obj_list, int* p_obj_num)
@@ -184,7 +177,7 @@ extern void ObjSegmentation(Mat image, OBJECTSTATE* p_obj_list, int* p_obj_num)
 	int j,k, idx, num;
 	int img_width, img_height,row,col;
 	bool* flags_arr;
-	RECTDEF rect; // ÖÖ×ÓÌî³äËã·¨µÄÍâ½Ó¾ØĞÎ
+	RECTDEF rect; // ç§å­å¡«å……ç®—æ³•çš„å¤–æ¥çŸ©å½¢
 	OBJECTSTATE obj_ste;
 	unsigned char data;
 
@@ -195,7 +188,7 @@ extern void ObjSegmentation(Mat image, OBJECTSTATE* p_obj_list, int* p_obj_num)
 	memset(flags_arr, 0, sizeof(bool)*img_width*img_height);
 	
 	num = 0;
-	// ±éÀúÕû¸öÍ¼Ïñ
+	// éå†æ•´ä¸ªå›¾åƒ
 	for(i = 0; i<img_width*img_height; i++)
 	{
 		row = i / img_width;
@@ -205,7 +198,7 @@ extern void ObjSegmentation(Mat image, OBJECTSTATE* p_obj_list, int* p_obj_num)
 			continue;
 
 		data = (unsigned char)image.data[i];
-		if(data >= 255) //ÇøÓòËÑË÷
+		if(data >= 255) //åŒºåŸŸæœç´¢
 		{
 			flags_arr[i] = true;
 
@@ -239,12 +232,12 @@ extern void ObjSegmentation(Mat image, OBJECTSTATE* p_obj_list, int* p_obj_num)
 					flags_arr[idx] = true;
 				}
 			}
-		}// end ÇøÓòËÑË÷
+		}// end åŒºåŸŸæœç´¢
 		else
 		{
 			flags_arr[i] = true;
 		}
-	}// end Í¼Ïñ±éÀú
+	}// end å›¾åƒéå†
 	free(flags_arr);
 
 	*p_obj_num = num;
