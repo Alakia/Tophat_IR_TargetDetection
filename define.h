@@ -1,10 +1,3 @@
-/*
-Edition: 1.0.
-Editor: Yang Heng, Ma Ke.
-OpenCV Edition: 2.3.1.
-Ide Edition: Visual Studio 2010.
-Time: 2016.4.11.
-*/
 #define MARGIN 10
 #define SQUARE 1
 #define CROSS  2
@@ -15,8 +8,8 @@ enum
 	TRACK = 2
 };
 
-/*½á¹¹Ìå¶¨Òå*/
-typedef struct __PointDef   /* Ä¿±ê×´Ì¬±äÁ¿ */
+/*ç»“æ„ä½“å®šä¹‰*/
+typedef struct __PointDef   /* ç›®æ ‡çŠ¶æ€å˜é‡ */
 {
 	int x;
 	int y;
@@ -24,17 +17,17 @@ typedef struct __PointDef   /* Ä¿±ê×´Ì¬±äÁ¿ */
 
 typedef struct __RectDef
 {
-	int x;					/* ×îĞ¡x×ø±êÎ»ÖÃ */
-	int y;					/* ×îĞ¡y×ø±êÎ»ÖÃ */
-	int width;				/* Ä¿±êÈ«¿í¶È */
-	int height;				/* Ä¿±êÈ«¸ß¶È */
+	int x;					/* æœ€å°xåæ ‡ä½ç½® */
+	int y;					/* æœ€å°yåæ ‡ä½ç½® */
+	int width;				/* ç›®æ ‡å…¨å®½åº¦ */
+	int height;				/* ç›®æ ‡å…¨é«˜åº¦ */
 }RECTDEF;
 
-typedef struct __ObjectState  /* Ä¿±ê×´Ì¬±äÁ¿ */
+typedef struct __ObjectState  /* ç›®æ ‡çŠ¶æ€å˜é‡ */
 {  
 	RECTDEF rect;
-	POINTDEF centroid;        /* ÖÊĞÄ×ø±ê */
-	int area;				  /* Ä¿±êÃæ»ı */
-	int catrgory;			  /* Ä¿±êÖÖÀà 0:¼ÙÄ¿±ê; 1:·´½¢µ¼µ¯; 2:·É»ú; 3:½¢´¬; 4:Ö±Éı»ú; 5:º½¿ÕÄ¸½¢; 6:Ì¹¿Ë */
-	void* user_data;		  /* ÓÃ»§Êı¾İ£¬±£Áô */
+	POINTDEF centroid;        /* è´¨å¿ƒåæ ‡ */
+	int area;				  /* ç›®æ ‡é¢ç§¯ */
+	int catrgory;			  
+	void* user_data;		  /* ç”¨æˆ·æ•°æ®ï¼Œä¿ç•™ */
 } OBJECTSTATE; 
