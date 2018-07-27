@@ -1,10 +1,3 @@
-/*
-Edition: 1.0.
-Editor: Yang Heng, Ma Ke.
-OpenCV Edition: 2.3.1.
-Ide Edition: Visual Studio 2010.
-Time: 2016.4.11.
-*/
 #include "define.h"
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -42,8 +35,8 @@ int main(int argc, char * argv[])
 	int obj_id = 0, area, max_area = 0;
 	int work_mode = SEARCH;
 	int work_mode_count = 0;
-	RECTDEF search_rect, track_rect; // ËÑË÷ºÍ¸ú×ÙÇøÓò
-	// ¼ì²âºÍ¸ú×ÙÊÇ·ñÓĞĞ§ÅĞ¶Ï
+	RECTDEF search_rect, track_rect; // æœç´¢å’Œè·Ÿè¸ªåŒºåŸŸ
+	// æ£€æµ‹å’Œè·Ÿè¸ªæ˜¯å¦æœ‰æ•ˆåˆ¤æ–­
 	bool search_valid = false, track_valid = false; 
 	Mat model_img;
 	Rect model_rect;
@@ -52,7 +45,7 @@ int main(int argc, char * argv[])
 	element  = getStructuringElement(0, Size(2*morph_rad+1, 2*morph_rad+1), Point(morph_rad,morph_rad));
 	for(i = 1; i < 300; i++)
 	{
-		sprintf(filePath, "E:/img/imagesequences/ir_img_sky_1/%04d.jpeg", i);
+		sprintf(filePath, "xxx.jpeg", i);
 		frame = imread(filePath);
 
 
@@ -66,45 +59,43 @@ int main(int argc, char * argv[])
 
 		if(work_mode == SEARCH)
 		{
-			// °´ÕÕÖ¸±êÒªÇó£¬ÊÓ³¡Îª70*40%
 			search_rect.x = frame.cols*0.15;
 
 			search_rect.y = frame.rows*0.3;
 			search_rect.width = 0.7*frame.cols;
 			search_rect.height = 0.4*frame.rows;
-			printf("\n½øÈë¼ì²âÄ£Ê½");
-			// 1. ĞÎÌ¬Ñ§ÂË²¨
+			// 1. å½¢æ€å­¦æ»¤æ³¢
 			double t1 = (double)getTickCount();
 			//morphologyEx(gray_img, temp_img, CV_MOP_ERODE, element);
 			int shape = SQUARE;
 			float diffx = 0.3, diffy = 0.15;
 			MorphTopHat(temp_img, temp_img, gray_img.rows, gray_img.cols, diffx, diffy, 9, 9, shape);
 			
-		    double t2 = ((double)getTickCount() - t1) / getTickFrequency();
+		    	double t2 = ((double)getTickCount() - t1) / getTickFrequency();
 			printf("\nMorph time is %f\n", t2);
 			imshow("Morph", temp_img);
 
-			// 2. ×ÔÊÊÓ¦ãĞÖµ·Ö¸î
+			// 2. è‡ªé€‚åº”é˜ˆå€¼åˆ†å‰²
 			int thresh = AdptiveThresh(temp_img, diffx, diffy);
 			threshold(temp_img, temp_img, thresh, 255, 0);
 			imshow("tre", temp_img);
 			printf("\nthreshold = %d", thresh);
 
-			// 3. Ìî²¹¿Õ¶´
+			// 3. å¡«è¡¥ç©ºæ´
 			OptimizeForeground(temp_img.data, temp_img.cols, temp_img.rows);
 			imshow("Opt", temp_img);
 
-			// 4. ÖÖ×ÓÌî³ä£¬»ñÈ¡Ä¿±ê²¨ÃÅ
+			// 4. ç§å­å¡«å……
 			ObjSegmentation(temp_img, obj_list, &obj_num);
 			imshow("Obj", temp_img);
 
-			//5. É¸Ñ¡½á¹û
+			//5. ç­›é€‰ç»“æœ
 			max_area = 0; obj_id = 0;
 			RECTDEF r;
 			for(k = 0; k < obj_num; k++)
 			{
 				r = obj_list[k].rect;
-				// ÅĞ¶Ï³ö½ç
+				// åˆ¤æ–­å‡ºç•Œ
 				if(r.x < search_rect.x || r.x+r.width > search_rect.x+search_rect.width 
 					|| r.y < search_rect.y || r.y+r.height > search_rect.y+search_rect.height)
 					continue;
@@ -122,14 +113,14 @@ int main(int argc, char * argv[])
 				work_mode_count++;
 				search_valid = true;
 			}
-			else // ±ØĞëÊÇÁ¬Ğø·¢ÏÖÄ¿±ê£¬·ñÔòÍ³¼Æ¼ÆÊıÖÃ0
+			else 
 			{
 				work_mode_count = 0;
 				search_valid = false;
 			}
 		}
 
-		// 6. ÏÔÊ¾½á¹û
+		// 6. æ˜¾ç¤ºç»“æœ
 		if(work_mode == SEARCH)
 		{
 			rectangle(frame, Point(search_rect.x,search_rect.y), 
